@@ -202,14 +202,14 @@ const ImportData = async () => {
       "http://localhost:5000/images/Support-Education-for-Children-in-Need1680694254805.png",
     description:
       "Help provide education to children in need by donating to our cause. Your donation will go towards providing school supplies, textbooks, and teacher salaries for children who would not have access to education otherwise",
-    goal: 10000,
+    goal: 27000,
     start_date: "2023-03-26 14:00:19",
     end_date: "2023-04-26 14:00:19",
     status: "open",
   });
   await user1.createDonation({
     id: 1,
-    amount: 50,
+    amount: 8095,
     donate_date: "2023-03-26 14:00:19",
     payment_method: "bank",
     project_id: 1,
@@ -222,14 +222,14 @@ const ImportData = async () => {
       "http://localhost:5000/images/Books-for-Underprivileged-Children1680694272995.png",
     description:
       "This fundraiser aims to provide new and gently used books to underprivileged children in the local community. The goal is to promote literacy and encourage a love for reading among children who may not have access to books at home or in school. With your donation, we can help improve the educational opportunities and future prospects of these children.",
-    goal: 5000,
+    goal: 30000,
     start_date: "2023-03-26 19:00:00",
     end_date: "2023-05-28 14:00:19",
     status: "open",
   });
   await user2.createDonation({
     id: 2,
-    amount: 100,
+    amount: 12010,
     donate_date: "2023-03-22 11:00:10",
     payment_method: "paypal",
     project_id: 2,
@@ -241,14 +241,14 @@ const ImportData = async () => {
     image: "http://localhost:5000/images/Education-for-All1680694112314.png",
     description:
       "Our organization is committed to providing access to education for children in low-income communities around the world. By donating to our cause, you are helping to provide resources such as textbooks, school supplies, and teacher salaries, as well as supporting the construction of new school facilities.",
-    goal: 7000,
+    goal: 30000,
     start_date: "2023-03-24 15:30:00",
     end_date: "2023-07-20 20:00:00",
     status: "open",
   });
   await user3.createDonation({
     id: 3,
-    amount: 150,
+    amount: 30860,
     donate_date: "2023-03-21 10:00:00",
     payment_method: "bank",
     project_id: 3,
@@ -261,14 +261,14 @@ const ImportData = async () => {
       "http://localhost:5000/images/School-Supplies-Drive1680694137875.png",
     description:
       "Help us support local students in need by donating school supplies! Our goal is to provide backpacks filled with essential items such as notebooks, pencils, pens, and more to students who may not have the resources to purchase these items on their own",
-    goal: 8000,
+    goal: 200000,
     start_date: "2023-03-26 15:00:00",
     end_date: "2023-09-26 14:30:19",
     status: "open",
   });
   await user4.createDonation({
     id: 4,
-    amount: 250,
+    amount: 102010,
     donate_date: "2023-03-19 02:00:00",
     payment_method: "paypal",
     project_id: 4,
@@ -280,14 +280,14 @@ const ImportData = async () => {
     image: "http://localhost:5000/images/Books-for-Students1680694163485.png",
     description:
       "Help us provide much-needed educational resources for students in underfunded schools. With your donation, we can purchase books for classrooms and school libraries, giving children access to reading materials that will enrich their education and inspire a love for learning",
-    goal: 20000,
+    goal: 100000,
     start_date: "2023-03-15 16:00:00",
     end_date: "2023-10-26 16:00:00",
     status: "open",
   });
   await user5.createDonation({
     id: 5,
-    amount: 50,
+    amount: 56000,
     donate_date: "2023-03-18 11:00:00",
     payment_method: "bank",
     project_id: 5,
@@ -300,14 +300,14 @@ const ImportData = async () => {
       "http://localhost:5000/images/Clean-Water-for-Rural-Communities1680694188621.png",
     description:
       "Many rural communities in developing countries lack access to clean water. As a result, people in these communities often suffer from waterborne illnesses, which can be life-threatening. Our fundraiser aims to provide clean water to these communities by building wells and water treatment facilities.",
-    goal: 30000,
+    goal: 60000,
     start_date: "2023-03-17 00:00:00",
     end_date: "2023-06-17 00:00:00",
     status: "open",
   });
   await user6.createDonation({
     id: 6,
-    amount: 20,
+    amount: 16010,
     donate_date: "2023-03-15 08:00:00",
     payment_method: "paypal",
     project_id: 6,
@@ -319,14 +319,14 @@ const ImportData = async () => {
     image: "http://localhost:5000/images/Hope-for-Education1680694211621.png",
     description:
       "Your donation to Hope for Education will help provide education and resources to children in underprivileged communities. With your support, we can ensure that every child has access to the education they need to reach their full potential.",
-    goal: 4000,
+    goal: 170000,
     start_date: "2023-03-12 12:00:19",
     end_date: "2023-06-12 12:00:19",
     status: "open",
   });
   await user7.createDonation({
     id: 7,
-    amount: 70,
+    amount: 2900,
     donate_date: "2023-03-01 07:00:00",
     payment_method: "bank",
     project_id: 7,
