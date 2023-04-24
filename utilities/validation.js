@@ -1,5 +1,6 @@
 const { body } = require("express-validator");
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 const { where } = require("sequelize");
 
 const createProjectValidation = [
@@ -130,6 +131,7 @@ const createUserValidation = [
     .isMobilePhone()
     .withMessage("Input data must be in phone number format"),
   body("email")
+    .trim()
     .isEmail()
     .withMessage("Input data must be in email format and email must unique")
     .custom((value) => {
@@ -190,10 +192,133 @@ const editUserValidation = [
     .withMessage("Select user role, be user or admin"),
 ];
 
+const loginValidation = [
+  body("email").trim().isEmail().withMessage("please input your email"),
+  body("password")
+    .trim()
+    .isString()
+    .isLength({ min: 6 })
+    .withMessage("Please enter password"),
+];
+
+const registerValidation = [
+  body("name")
+    .trim()
+    .isLength({ min: 5, max: 50 })
+    .withMessage("Name must be between 5 and 50 characters"),
+  body("avatar")
+    .custom((value) => {
+      const base64EncodedImage = value.split(",");
+      const data = base64EncodedImage[0].split(";")[0].split(":")[1].split("/");
+      if (data[0] !== "image") {
+        throw new Error("");
+      }
+      try {
+        Buffer.from(base64EncodedImage[1], "base64");
+      } catch (error) {
+        console.log(error);
+        throw new Error("");
+      }
+      return true;
+    })
+    .withMessage(
+      "Avatar must be an image jpge or png and less than 5 megabyte"
+    ),
+  body("address")
+    .trim()
+    .isLength({ min: 10, max: 200 })
+    .withMessage("Address must be between 10 and 200 characters"),
+  body("phone")
+    .isMobilePhone()
+    .withMessage("Input data must be in phone number format"),
+  body("email")
+    .trim()
+    .isEmail()
+    .withMessage("Input data must be in email format and email must unique")
+    .custom((value) => {
+      const checkEmail = async () => {
+        const user = await User.findOne({ where: { email: value } });
+        if (user) {
+          throw new Error("This email already exists");
+        } else {
+          return true;
+        }
+      };
+      return checkEmail();
+    }),
+];
+
+const userUpdatePasswordValidation = [
+  body("name")
+    .trim()
+    .isLength({ min: 5, max: 50 })
+    .withMessage("Name must be between 5 and 50 characters"),
+  body("avatar")
+    .custom((value) => {
+      const base64EncodedImage = value.split(",");
+      const data = base64EncodedImage[0].split(";")[0].split(":")[1].split("/");
+      if (data[0] !== "image") {
+        throw new Error("");
+      }
+      try {
+        Buffer.from(base64EncodedImage[1], "base64");
+      } catch (error) {
+        console.log(error);
+        throw new Error("");
+      }
+      return true;
+    })
+    .withMessage(
+      "Avatar must be an image jpge or png and less than 5 megabyte"
+    ),
+  body("address")
+    .trim()
+    .isLength({ min: 10, max: 200 })
+    .withMessage("Address must be between 10 and 200 characters"),
+  body("phone")
+    .isMobilePhone()
+    .withMessage("Input data must be in phone number format"),
+  body("newPassword")
+    .trim()
+    .isStrongPassword()
+    .withMessage(
+      "Password must contain uppercase, lowercase, number, and special characters"
+    ),
+  body("confirmPassword")
+    .custom((value, { req }) => {
+      if (value !== req.body.newPassword) {
+        throw new Error("");
+      }
+      return true;
+    })
+    .withMessage(
+      "The confirmation password must be the same as the new password"
+    ),
+  body("currentPassword")
+    .custom((value, { req }) => {
+      (async () => {
+        const user = await User.findOne({ where: { email: req.user.email } });
+        if (user !== null) {
+          bcrypt.compare(value, user.password, (err, result) => {
+            if (result) {
+              return true;
+            } else {
+              throw new Error("");
+            }
+          });
+        }
+      })();
+    })
+    .withMessage("Current password is incorrect"),
+];
+
 module.exports = {
   createUserValidation,
   editUserValidation,
   createProjectValidation,
   searchProjectValidation,
   editProjectValidation,
+  loginValidation,
+  registerValidation,
+  userUpdatePasswordValidation,
 };

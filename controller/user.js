@@ -10,8 +10,16 @@ const { validationResult } = require("express-validator");
 const {
   createUserValidation,
   editUserValidation,
+  loginValidation,
+  registerValidation,
+  userUpdatePasswordValidation,
 } = require("../utilities/validation");
 const base64ToImage = require("../utilities/base64ToImage");
+const {
+  createToken,
+  checkAdmin,
+  checkUser,
+} = require("../utilities/authenticate");
 
 const router = express.Router();
 
@@ -96,7 +104,7 @@ router.post("/delete-selected-user", (req, res, next) => {
   });
 });
 
-router.patch("/reset-password", (req, res, next) => {
+router.patch("/reset-password", checkAdmin, (req, res, next) => {
   User.findByPk(req.body.id)
     .then((user) => {
       const newPassword = generatePassword();
@@ -179,5 +187,67 @@ router.patch("/update-user", editUserValidation, (req, res, next) => {
       res.status(status.INTERNAL_SERVER_ERROR).send();
     });
 });
+
+router.post("/login", loginValidation, (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  (async () => {
+    const user = await User.findOne({ where: { email: req.body.email } });
+    if (user === null) {
+      res.status(status.UNAUTHORIZED).send();
+    } else {
+      bcrypt.compare(req.body.password, user.password, (err, result) => {
+        if (result) {
+          res.status(status.OK).send(createToken(user.email));
+        } else {
+          res.status(status.UNAUTHORIZED).send();
+        }
+      });
+    }
+  })();
+});
+
+router.get("/checkAuthenticate", checkUser, (req, res, next) => {
+  res.status(status.OK).send(req.user.name);
+});
+
+router.post("/register", registerValidation, (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  base64ToImage(req.body.avatar, req.body.name, "avatar", (imageLink) => {
+    req.body.avatar = imageLink;
+  });
+  const newPassword = generatePassword();
+  bcrypt.hash(newPassword, 10, function (err, hash) {
+    if (err) {
+      res.status(status.INTERNAL_SERVER_ERROR).send();
+    }
+    req.body.password = hash;
+    sendEmail(req.body.name, req.body.email, newPassword);
+    User.create(req.body)
+      .then(() => {
+        res.status(status.OK).send();
+      })
+      .catch(() => {
+        res.status(status.INTERNAL_SERVER_ERROR).send();
+      });
+  });
+});
+
+router.patch(
+  "/user-update-password",
+  checkUser,
+  userUpdatePasswordValidation,
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+  }
+);
 
 module.exports = router;

@@ -1,10 +1,10 @@
 var SibApiV3Sdk = require("sib-api-v3-sdk");
 var defaultClient = SibApiV3Sdk.ApiClient.instance;
+const sendInBlueKey = require("../keyApi");
 
 // Configure API key authorization: api-key
 var apiKey = defaultClient.authentications["api-key"];
-apiKey.apiKey =
-  "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";
+apiKey.apiKey = sendInBlueKey;
 
 // Uncomment below two lines to configure authorization using: partner-key
 // var partnerKey = defaultClient.authentications['partner-key'];
