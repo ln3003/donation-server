@@ -2,6 +2,7 @@ const { body } = require("express-validator");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const { where } = require("sequelize");
+const baseUrl = require("../hosturl");
 
 const createProjectValidation = [
   body("name")
@@ -10,6 +11,9 @@ const createProjectValidation = [
     .withMessage("Project name must be between 15 and 50 characters"),
   body("image")
     .custom((value) => {
+      if (value.includes(baseUrl)) {
+        return true;
+      }
       const base64EncodedImage = value.split(",");
       const data = base64EncodedImage[0].split(";")[0].split(":")[1].split("/");
       if (data[0] !== "image") {
@@ -51,6 +55,9 @@ const editProjectValidation = [
     .withMessage("Project name must be between 15 and 50 characters"),
   body("image")
     .custom((value) => {
+      if (value.includes(baseUrl)) {
+        return true;
+      }
       const base64EncodedImage = value.split(",");
       const data = base64EncodedImage[0].split(";")[0].split(":")[1].split("/");
       if (data[0] !== "image") {
@@ -107,6 +114,9 @@ const createUserValidation = [
     .withMessage("Name must be between 5 and 50 characters"),
   body("avatar")
     .custom((value) => {
+      if (value.includes(baseUrl)) {
+        return true;
+      }
       const base64EncodedImage = value.split(",");
       const data = base64EncodedImage[0].split(";")[0].split(":")[1].split("/");
       if (data[0] !== "image") {
@@ -163,6 +173,9 @@ const editUserValidation = [
     .withMessage("Name must be between 5 and 50 characters"),
   body("avatar")
     .custom((value) => {
+      if (value.includes(baseUrl)) {
+        return true;
+      }
       const base64EncodedImage = value.split(",");
       const data = base64EncodedImage[0].split(";")[0].split(":")[1].split("/");
       if (data[0] !== "image") {
@@ -208,6 +221,9 @@ const registerValidation = [
     .withMessage("Name must be between 5 and 50 characters"),
   body("avatar")
     .custom((value) => {
+      if (value.includes(baseUrl)) {
+        return true;
+      }
       const base64EncodedImage = value.split(",");
       const data = base64EncodedImage[0].split(";")[0].split(":")[1].split("/");
       if (data[0] !== "image") {
@@ -253,8 +269,12 @@ const userUpdatePasswordValidation = [
     .trim()
     .isLength({ min: 5, max: 50 })
     .withMessage("Name must be between 5 and 50 characters"),
+  body("email").trim().isEmail(),
   body("avatar")
     .custom((value) => {
+      if (value.includes(baseUrl)) {
+        return true;
+      }
       const base64EncodedImage = value.split(",");
       const data = base64EncodedImage[0].split(";")[0].split(":")[1].split("/");
       if (data[0] !== "image") {
@@ -284,32 +304,10 @@ const userUpdatePasswordValidation = [
     .withMessage(
       "Password must contain uppercase, lowercase, number, and special characters"
     ),
-  body("confirmPassword")
-    .custom((value, { req }) => {
-      if (value !== req.body.newPassword) {
-        throw new Error("");
-      }
-      return true;
-    })
-    .withMessage(
-      "The confirmation password must be the same as the new password"
-    ),
-  body("currentPassword")
-    .custom((value, { req }) => {
-      (async () => {
-        const user = await User.findOne({ where: { email: req.user.email } });
-        if (user !== null) {
-          bcrypt.compare(value, user.password, (err, result) => {
-            if (result) {
-              return true;
-            } else {
-              throw new Error("");
-            }
-          });
-        }
-      })();
-    })
-    .withMessage("Current password is incorrect"),
+];
+
+const forgetPasswordValidation = [
+  body("email").trim().isEmail().withMessage("Enter your email"),
 ];
 
 module.exports = {
@@ -321,4 +319,5 @@ module.exports = {
   loginValidation,
   registerValidation,
   userUpdatePasswordValidation,
+  forgetPasswordValidation,
 };

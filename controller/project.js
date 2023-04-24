@@ -10,6 +10,11 @@ const {
   searchProjectValidation,
   editProjectValidation,
 } = require("../utilities/validation");
+const {
+  createToken,
+  checkAdmin,
+  checkUser,
+} = require("../utilities/authenticate");
 
 const router = express.Router();
 
@@ -53,20 +58,25 @@ router.post("/search-project", searchProjectValidation, (req, res, next) => {
     });
 });
 
-router.post("/create-project", createProjectValidation, (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+router.post(
+  "/create-project",
+  checkAdmin,
+  createProjectValidation,
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    req.body.owner_id = 1;
+    base64ToImage(req.body.image, req.body.name, "images", (imageLink) => {
+      req.body.image = imageLink;
+    });
+    Project.create(req.body);
+    res.status(status.OK).send();
   }
-  req.body.owner_id = 1;
-  base64ToImage(req.body.image, req.body.name, "images", (imageLink) => {
-    req.body.image = imageLink;
-  });
-  Project.create(req.body);
-  res.status(status.OK).send();
-});
+);
 
-router.delete("/delete-project/:id", (req, res, next) => {
+router.delete("/delete-project/:id", checkAdmin, (req, res, next) => {
   Project.findByPk(Number(req.params.id))
     .then((project) => {
       project.update({ deleted: true });
@@ -77,7 +87,7 @@ router.delete("/delete-project/:id", (req, res, next) => {
   res.status(status.OK).send();
 });
 
-router.post("/delete-selected-project", (req, res, next) => {
+router.post("/delete-selected-project", checkAdmin, (req, res, next) => {
   req.body.selectedValues.forEach((item) => {
     Project.findByPk(Number(item))
       .then((project) => {
@@ -90,30 +100,35 @@ router.post("/delete-selected-project", (req, res, next) => {
   res.status(status.OK).send();
 });
 
-router.patch("/update-project", editProjectValidation, (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  base64ToImage(req.body.image, req.body.name, "images", (imageLink) => {
-    req.body.image = imageLink;
-  });
-  Project.findByPk(req.body.id)
-    .then((project) => {
-      project.update({
-        name: req.body.name,
-        image: req.body.image,
-        description: req.body.description,
-        goal: req.body.goal,
-        start_date: req.body.start_date,
-        end_date: req.body.end_date,
-        status: req.body.status,
-      });
-    })
-    .catch((error) => {
-      res.status(status.INTERNAL_SERVER_ERROR).send();
+router.patch(
+  "/update-project",
+  checkAdmin,
+  editProjectValidation,
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    base64ToImage(req.body.image, req.body.name, "images", (imageLink) => {
+      req.body.image = imageLink;
     });
-  res.status(status.OK).send();
-});
+    Project.findByPk(req.body.id)
+      .then((project) => {
+        project.update({
+          name: req.body.name,
+          image: req.body.image,
+          description: req.body.description,
+          goal: req.body.goal,
+          start_date: req.body.start_date,
+          end_date: req.body.end_date,
+          status: req.body.status,
+        });
+      })
+      .catch((error) => {
+        res.status(status.INTERNAL_SERVER_ERROR).send();
+      });
+    res.status(status.OK).send();
+  }
+);
 
 module.exports = router;
