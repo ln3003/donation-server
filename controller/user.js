@@ -231,7 +231,16 @@ router.post("/login", loginValidation, (req, res, next) => {
 });
 
 router.get("/checkAuthenticate", checkUser, (req, res, next) => {
-  res.status(status.OK).send(req.user.name);
+  (async () => {
+    const user = await User.findOne({ where: { email: req.user.email } });
+    if (user === null) {
+      res.status(status.UNAUTHORIZED).send();
+    } else {
+      res
+        .status(status.OK)
+        .send({ name: user.name, token: createToken(user.email) });
+    }
+  })();
 });
 
 router.post("/register", registerValidation, (req, res, next) => {
