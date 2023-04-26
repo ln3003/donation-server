@@ -310,6 +310,10 @@ const forgetPasswordValidation = [
   body("email").trim().isEmail().withMessage("Enter your email"),
 ];
 
+const addDonationValidation = [
+  body("userEmail").trim().isEmail().withMessage("You shoun"),
+];
+
 module.exports = {
   createUserValidation,
   editUserValidation,
