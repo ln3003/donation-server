@@ -311,7 +311,23 @@ const forgetPasswordValidation = [
 ];
 
 const addDonationValidation = [
-  body("userEmail").trim().isEmail().withMessage("You shoun"),
+  body("userEmail")
+    .trim()
+    .isEmail()
+    .withMessage("You must enter the email of user"),
+  body("amount")
+    .trim()
+    .isCurrency()
+    .withMessage("You must enter the amount that user want donate"),
+  body("paymentMethod")
+    .custom((value) => {
+      if (value === "bank" || value === "paypal") {
+        return true;
+      } else {
+        throw new Error("");
+      }
+    })
+    .withMessage("payment must be bank or paypal"),
 ];
 
 module.exports = {
@@ -324,4 +340,5 @@ module.exports = {
   registerValidation,
   userUpdatePasswordValidation,
   forgetPasswordValidation,
+  addDonationValidation,
 };

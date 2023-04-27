@@ -1,4 +1,6 @@
 const Donation = require("../models/donation");
+const User = require("../models/user");
+const Project = require("../models/project");
 const sequelize = require("../utilities/database");
 const { QueryTypes } = require("sequelize");
 const express = require("express");
@@ -8,6 +10,8 @@ const {
   checkAdmin,
   checkUser,
 } = require("../utilities/authenticate");
+const { addDonationValidation } = require("../utilities/validation");
+const { validationResult } = require("express-validator");
 
 const router = express.Router();
 
@@ -79,5 +83,52 @@ router.post("/search-donation", checkAdmin, (req, res, next) => {
       res.status(status.INTERNAL_SERVER_ERROR).send();
     });
 });
+
+router.post(
+  "/create-donation",
+  checkUser,
+  addDonationValidation,
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    (async () => {
+      const user = await User.findOne({ where: { email: req.body.userEmail } });
+      const project = await Project.findByPk(Number(req.body.projectId));
+      if (user === null) {
+        const error = errors.array();
+        error.push({
+          msg: "email not found",
+          param: "userEmail",
+        });
+        res.status(status.BAD_REQUEST).send({ errors: error });
+      }
+      if (project === null) {
+        const error = errors.array();
+        error.push({
+          msg: "project not found",
+          param: "projectId",
+        });
+        res.status(status.BAD_REQUEST).send({ errors: error });
+      }
+      if (user !== null && project !== null) {
+        Donation.create({
+          user_id: user.id,
+          project_id: project.id,
+          amount: Number(req.body.amount),
+          payment_method: req.body.paymentMethod,
+          donate_date: Date.now(),
+        })
+          .then(() => {
+            res.status(status.OK).send();
+          })
+          .catch(() => {
+            res.status(status.INTERNAL_SERVER_ERROR).send();
+          });
+      }
+    })();
+  }
+);
 
 module.exports = router;
