@@ -236,9 +236,11 @@ router.get("/checkAuthenticate", checkUser, (req, res, next) => {
     if (user === null) {
       res.status(status.UNAUTHORIZED).send();
     } else {
-      res
-        .status(status.OK)
-        .send({ name: user.name, token: createToken(user.email) });
+      res.status(status.OK).send({
+        name: user.name,
+        role: user.role,
+        token: createToken(user.email),
+      });
     }
   })();
 });
@@ -363,6 +365,26 @@ router.post("/forget-password", forgetPasswordValidation, (req, res, next) => {
         user.update({ password: hash });
       });
       res.status(status.OK).send();
+    }
+  })();
+});
+
+router.get("/logout", checkUser, (req, res, next) => {
+  (async () => {
+    const user = await User.findOne({ where: { email: req.user.email } });
+    if (user === null) {
+      console.log(1);
+      res.status(status.UNAUTHORIZED).send();
+    } else {
+      console.log(req.user.jwt_payload_tokenRandomWord);
+      user
+        .update({ tokenRandomWord: req.user.jwt_payload_tokenRandomWord })
+        .then(() => {
+          res.status(status.OK).send();
+        })
+        .catch(() => {
+          res.status(status.INTERNAL_SERVER_ERROR).send();
+        });
     }
   })();
 });

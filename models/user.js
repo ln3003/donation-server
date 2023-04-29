@@ -40,6 +40,11 @@ const User = sequelize.define("User", {
     defaultValue: "user",
     allowNull: false,
   },
+  tokenRandomWord: {
+    type: DataTypes.STRING,
+    defaultValue: "",
+    allowNull: false,
+  },
   deleted: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,

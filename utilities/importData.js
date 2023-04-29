@@ -6,17 +6,19 @@ const ImportData = async () => {
   await User.create({
     id: 1,
     name: "Le Quang Trong Nghia",
-    avatar: "",
+    avatar:
+      "http://localhost:5000/avatar/Le-Quang-Trong-Nghia1682332883425.jpeg",
     address: "22/30 Duong So 6, Binh Tan, HCM",
     phone: "0901234567",
     email: "nghsvn@gmail.com",
     role: "admin",
-    password: "$2b$10$wg7h3V.8dmT6aiGZT.Wg6uCDOTcPtEK6s2xLirPsFkWWAcaZg52pe",
+    password: "$2b$10$qH1VNtmVrAVn1wvk8XrPteKgE.xEheIJ2YEcLuHvIToCgaAEMdzKm",
   });
   await User.create({
     id: 2,
     name: "Anneliese N. Harwell",
-    avatar: "",
+    avatar:
+      "http://localhost:5000/avatar/Anneliese-N.-Harwell1682332757710.jpeg",
     address: "103 Emily Drive Hampton, SC 29924",
     phone: "803-887-6182",
     email: "AnnelieseNHarwell@armyspy.com",
@@ -25,7 +27,7 @@ const ImportData = async () => {
   await User.create({
     id: 3,
     name: "Maria J. Enright",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Maria-J.-Enright1682332769033.png",
     address: "2200 Christie Way Burlington, MA 01803",
     phone: "978-809-7918",
     email: "MariaJEnright@teleworm.us",
@@ -34,7 +36,7 @@ const ImportData = async () => {
   await User.create({
     id: 4,
     name: "Dennis M. Creed",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Dennis-M.-Creed1682332783732.png",
     address: "131 Lincoln Street Hightstown, NJ 08520",
     phone: "609-443-7699",
     email: "DennisMCreed@rhyta.com",
@@ -43,7 +45,8 @@ const ImportData = async () => {
   await User.create({
     id: 5,
     name: "Rosemarie L. Thomas",
-    avatar: "",
+    avatar:
+      "http://localhost:5000/avatar/Rosemarie-L.-Thomas1682597234814.jpeg",
     address: "511 Private Lane Valdosta, GA 31601",
     phone: "229-269-9032",
     email: "RosemarieLThomas@jourrapide.com",
@@ -52,7 +55,7 @@ const ImportData = async () => {
   await User.create({
     id: 6,
     name: "William T. Turner",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/William-T.-Turner1682332824162.jpeg",
     address: "1260 Concord Street Charlotte, NC 28273",
     phone: "704-492-6218",
     email: "WilliamTTurner@dayrep.com",
@@ -61,7 +64,7 @@ const ImportData = async () => {
   await User.create({
     id: 7,
     name: "Justin F. Purdy",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Justin-F.-Purdy1682332838640.jpeg",
     address: "1964 Stone Lane Philadelphia, PA 19103",
     phone: "610-422-0351",
     email: "JustinFPurdy@rhyta.com",
@@ -70,7 +73,7 @@ const ImportData = async () => {
   await User.create({
     id: 8,
     name: "Brian T. Baker",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Brian-T.-Baker1682332862488.jpeg",
     address: "770 Wines Lane Houston, TX 77030",
     phone: "832-355-7489",
     email: "BrianTBaker@rhyta.com",
@@ -79,7 +82,7 @@ const ImportData = async () => {
   await User.create({
     id: 9,
     name: "Danny E. Garcia",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Danny-E.-Garcia1682332905289.jpeg",
     address: "635 Columbia Boulevard Greensboro, MD 21639",
     phone: "410-482-4164",
     email: "DannyEGarcia@rhyta.com",
@@ -88,7 +91,7 @@ const ImportData = async () => {
   await User.create({
     id: 10,
     name: "Gail D. Rush",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Gail-D.-Rush1682332916566.png",
     address: "785 Weekley Street San Antonio, TX 78217",
     phone: "210-295-9505",
     email: "GailDRush@jourrapide.com",
@@ -97,7 +100,7 @@ const ImportData = async () => {
   await User.create({
     id: 11,
     name: "Shirley M. Smit",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Shirley-M.-Smit1682332932834.png",
     address: "1606 Oakwood Avenue New York, NY 1002",
     phone: "212-663-562",
     email: "ShirleyMSmith@jourrapide.co",
@@ -106,7 +109,7 @@ const ImportData = async () => {
   await User.create({
     id: 12,
     name: "Anneliese N. Harwel",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Anneliese-N.-Harwel1682332949321.png",
     address: "103 Emily Drive Hampton, SC 2992",
     phone: "803-887-618",
     email: "AnnelieseNHarwell@armyspy.co",
@@ -115,7 +118,7 @@ const ImportData = async () => {
   await User.create({
     id: 13,
     name: "Maria J. Enrigh",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Maria-J.-Enrigh1682332970569.png",
     address: "2200 Christie Way Burlington, MA 0180",
     phone: "978-809-791",
     email: "MariaJEnright@teleworm.u",
@@ -124,7 +127,7 @@ const ImportData = async () => {
   await User.create({
     id: 14,
     name: "Dennis M. Cree",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Dennis-M.-Cree1682332984179.png",
     address: "131 Lincoln Street Hightstown, NJ 0852",
     phone: "609-443-769",
     email: "DennisMCreed@rhyta.co",
@@ -133,7 +136,7 @@ const ImportData = async () => {
   await User.create({
     id: 15,
     name: "Rosemarie L. Thoma",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Rosemarie-L.-Thoma1682333000089.png",
     address: "511 Private Lane Valdosta, GA 3160",
     phone: "229-269-903",
     email: "RosemarieLThomas@jourrapide.co",
@@ -142,7 +145,7 @@ const ImportData = async () => {
   await User.create({
     id: 16,
     name: "William T. Turne",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/William-T.-Turne1682333013440.png",
     address: "1260 Concord Street Charlotte, NC 2827",
     phone: "704-492-621",
     email: "WilliamTTurner@dayrep.c",
@@ -151,7 +154,7 @@ const ImportData = async () => {
   await User.create({
     id: 17,
     name: "Justin F. Purd",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Justin-F.-Purd1682333022821.png",
     address: "1964 Stone Lane Philadelphia, PA 1910",
     phone: "610-422-035",
     email: "JustinFPurdy@rhyta.co",
@@ -160,7 +163,7 @@ const ImportData = async () => {
   await User.create({
     id: 18,
     name: "Brian T. Bake",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Brian-T.-Bake1682333036600.png",
     address: "770 Wines Lane Houston, TX 7703",
     phone: "832-355-748",
     email: "BrianTBaker@rhyta.c",
@@ -169,7 +172,7 @@ const ImportData = async () => {
   await User.create({
     id: 19,
     name: "Danny E. Garci",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Gail-D.-Rus1682333046877.png",
     address: "635 Columbia Boulevard Greensboro, MD 2163",
     phone: "410-482-416",
     email: "DannyEGarcia@rhyta.co",
@@ -178,7 +181,7 @@ const ImportData = async () => {
   await User.create({
     id: 20,
     name: "Gail D. Rus",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/Van-Lam1682333620410.jpeg",
     address: "785 Weekley Street San Antonio, TX 7821",
     phone: "210-295-950",
     email: "GailDRush@jourrapide.c",
@@ -187,7 +190,7 @@ const ImportData = async () => {
   await User.create({
     id: 21,
     name: "Shirley M. Smith",
-    avatar: "",
+    avatar: "http://localhost:5000/avatar/ln3003vn@gmail.com1682597004095.jpeg",
     address: "1606 Oakwood Avenue New York, NY 10025",
     phone: "212-663-5623",
     email: "ShirleyMSmith@jourrapide.com",

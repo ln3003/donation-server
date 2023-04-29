@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const status = require("http-status");
+const generatePassword = require("password-generator");
 const User = require("../models/user");
 
 const jwtOptions = {
@@ -16,17 +17,24 @@ passport.use(
       const user = await User.findOne({ where: { email: jwt_payload.email } });
       if (user === null) {
         return done(null, false);
-      } else {
+      } else if (user.tokenRandomWord !== jwt_payload.tokenRandomWord) {
+        user.jwt_payload_tokenRandomWord = jwt_payload.tokenRandomWord;
         return done(null, user);
+      } else {
+        return done(null, false);
       }
     })();
   })
 );
 
 const createToken = (userEmail) => {
-  const token = jwt.sign({ email: userEmail }, jwtOptions.secretOrKey, {
-    expiresIn: "1h",
-  });
+  const token = jwt.sign(
+    { email: userEmail, tokenRandomWord: generatePassword() },
+    jwtOptions.secretOrKey,
+    {
+      expiresIn: "1h",
+    }
+  );
   return token;
 };
 
@@ -36,7 +44,7 @@ const checkAdmin = [
     if (req.user.role === "admin") {
       next();
     } else {
-      res.status(status.UNAUTHORIZED).send();
+      res.status(status.FORBIDDEN).send();
     }
   },
 ];
@@ -47,7 +55,7 @@ const checkUser = [
     if (req.user.role === "admin" || req.user.role === "user") {
       next();
     } else {
-      res.status(status.UNAUTHORIZED).send();
+      res.status(status.FORBIDDEN).send();
     }
   },
 ];
