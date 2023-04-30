@@ -5,7 +5,7 @@ const Donation = require("../models/donation");
 const ImportData = async () => {
   await User.create({
     id: 1,
-    name: "Le Quang Trong Nghia",
+    name: "Trong Nghia",
     avatar:
       "http://localhost:5000/avatar/Le-Quang-Trong-Nghia1682332883425.jpeg",
     address: "22/30 Duong So 6, Binh Tan, HCM",
@@ -195,6 +195,15 @@ const ImportData = async () => {
     phone: "212-663-5623",
     email: "ShirleyMSmith@jourrapide.com",
     password: "$2b$10$wg7h3V.8dmT6aiGZT.Wg6uCDOTcPtEK6s2xLirPsFkWWAcaZg52pe",
+  });
+  await User.create({
+    id: 22,
+    name: "nghia le",
+    avatar: "http://localhost:5000/avatar/ln3003vn@gmail.com1682597004095.jpeg",
+    address: "72 le thanh ton",
+    phone: "212-663-5623",
+    email: "ln3003vn@gmail.com",
+    password: "$2b$10$qH1VNtmVrAVn1wvk8XrPteKgE.xEheIJ2YEcLuHvIToCgaAEMdzKm",
   });
 
   const user1 = await User.findByPk(1);
