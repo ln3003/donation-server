@@ -34,4 +34,30 @@ const sendEmail = (name, email, newPassword) => {
     );
 };
 
-module.exports = sendEmail;
+const sendEmailConfirm = (name, email, amount, payment_method) => {
+  apiInstance
+    .sendTransacEmail({
+      subject: "Transaction pending",
+      sender: { email: "nghia@ngh.one", name: "Donation Project" },
+      replyTo: { email: "nghia@ngh.one", name: "Donation Project" },
+      to: [{ name: name, email: email }],
+      htmlContent: `<h1>You have a transaction pending confirmation</h1>
+                    <p>You have donated the amount: {{params.amount}} USD</p>
+                    <p>Money transfer method: {{params.payment_method}}</p>
+                    <p>We will check and update your transaction status</p>`,
+      params: {
+        amount,
+        payment_method,
+      },
+    })
+    .then(
+      function (data) {
+        console.log("API called successfully. Returned data: " + data);
+      },
+      function (error) {
+        console.error(error);
+      }
+    );
+};
+
+module.exports = {sendEmail,sendEmailConfirm};

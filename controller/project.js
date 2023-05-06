@@ -1,7 +1,7 @@
 const Project = require("../models/project");
 const sequelize = require("../utilities/database");
 const base64ToImage = require("../utilities/base64ToImage");
-const { QueryTypes } = require("sequelize");
+const { QueryTypes, where } = require("sequelize");
 const status = require("http-status");
 const express = require("express");
 const { validationResult } = require("express-validator");
@@ -15,6 +15,7 @@ const {
   checkAdmin,
   checkUser,
 } = require("../utilities/authenticate");
+const Donation = require("../models/donation");
 
 const router = express.Router();
 
@@ -130,5 +131,24 @@ router.patch(
     res.status(status.OK).send();
   }
 );
+
+router.get("/project-detail/:id", (req, res, next) => {
+  sequelize
+    .query(
+      `SELECT projects.*, SUM(donations.amount) AS donation_received FROM projects LEFT JOIN donations ON projects.id = donations.project_id WHERE projects.id = :id GROUP BY projects.id`,
+      {
+        replacements: {
+          id: req.params.id,
+        },
+        type: QueryTypes.SELECT,
+      }
+    )
+    .then((project) => {
+      res.status(status.OK).send(project[0]);
+    })
+    .catch(() => {
+      res.status(status.INTERNAL_SERVER_ERROR).send();
+    });
+});
 
 module.exports = router;

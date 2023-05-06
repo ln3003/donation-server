@@ -20,6 +20,11 @@ const Donation = sequelize.define("Donation", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "unconfimred",
+  },
   deleted: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,

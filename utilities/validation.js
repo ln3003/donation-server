@@ -330,6 +330,19 @@ const addDonationValidation = [
     .withMessage("payment must be bank or paypal"),
 ];
 
+const addDonationAnonymousValidation = [
+  body("amount").trim().isCurrency().withMessage("You must enter the amount"),
+  body("payment_method")
+    .custom((value) => {
+      if (value === "bank" || value === "paypal") {
+        return true;
+      } else {
+        throw new Error("");
+      }
+    })
+    .withMessage("payment must be bank or paypal"),
+];
+
 module.exports = {
   createUserValidation,
   editUserValidation,
@@ -341,4 +354,5 @@ module.exports = {
   userUpdatePasswordValidation,
   forgetPasswordValidation,
   addDonationValidation,
+  addDonationAnonymousValidation,
 };

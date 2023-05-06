@@ -205,6 +205,15 @@ const ImportData = async () => {
     email: "ln3003vn@gmail.com",
     password: "$2b$10$qH1VNtmVrAVn1wvk8XrPteKgE.xEheIJ2YEcLuHvIToCgaAEMdzKm",
   });
+  await User.create({
+    id: 23,
+    name: "Anonymous",
+    avatar: "http://localhost:5000/avatar/ln3003vn@gmail.com1682597004095.jpeg",
+    address: "anonymous",
+    phone: "anonymous",
+    email: "anonymous",
+    password: "$2b$10$qH1VNtmVrAVn1wvk8XrPteKgE.xEheIJ2YEcLuHvIToCgaAEMdzKm",
+  });
 
   const user1 = await User.findByPk(1);
   await user1.createProject({
@@ -224,6 +233,7 @@ const ImportData = async () => {
     amount: 8095,
     donate_date: "2023-03-26 14:00:19",
     payment_method: "bank",
+    status: "transferred",
     project_id: 1,
   });
   const user2 = await User.findByPk(2);
@@ -244,6 +254,7 @@ const ImportData = async () => {
     amount: 12010,
     donate_date: "2023-03-22 11:00:10",
     payment_method: "paypal",
+    status: "transferred",
     project_id: 2,
   });
   const user3 = await User.findByPk(3);
@@ -263,6 +274,7 @@ const ImportData = async () => {
     amount: 30860,
     donate_date: "2023-03-21 10:00:00",
     payment_method: "bank",
+    status: "transferred",
     project_id: 3,
   });
   const user4 = await User.findByPk(4);
@@ -283,6 +295,7 @@ const ImportData = async () => {
     amount: 102010,
     donate_date: "2023-03-19 02:00:00",
     payment_method: "paypal",
+    status: "transferred",
     project_id: 4,
   });
   const user5 = await User.findByPk(5);
@@ -302,6 +315,7 @@ const ImportData = async () => {
     amount: 56000,
     donate_date: "2023-03-18 11:00:00",
     payment_method: "bank",
+    status: "transferred",
     project_id: 5,
   });
   const user6 = await User.findByPk(6);
@@ -322,6 +336,7 @@ const ImportData = async () => {
     amount: 16010,
     donate_date: "2023-03-15 08:00:00",
     payment_method: "paypal",
+    status: "transferred",
     project_id: 6,
   });
   const user7 = await User.findByPk(7);
@@ -341,6 +356,7 @@ const ImportData = async () => {
     amount: 2900,
     donate_date: "2023-03-01 07:00:00",
     payment_method: "bank",
+    status: "transferred",
     project_id: 7,
   });
   const user8 = await User.findByPk(8);
@@ -361,6 +377,7 @@ const ImportData = async () => {
     amount: 1000,
     donate_date: "2023-03-02 16:00:00",
     payment_method: "paypal",
+    status: "transferred",
     project_id: 8,
   });
   const user9 = await User.findByPk(9);
@@ -380,6 +397,7 @@ const ImportData = async () => {
     amount: 250,
     donate_date: "2023-03-04 20:00:19",
     payment_method: "bank",
+    status: "transferred",
     project_id: 9,
   });
   const user10 = await User.findByPk(10);
@@ -399,6 +417,7 @@ const ImportData = async () => {
     amount: 300,
     donate_date: "2023-03-05 21:00:19",
     payment_method: "paypal",
+    status: "transferred",
     project_id: 10,
   });
   await user10.createDonation({
@@ -406,6 +425,7 @@ const ImportData = async () => {
     amount: 50,
     donate_date: "2023-03-06 21:00:19",
     payment_method: "paypal",
+    status: "transferred",
     project_id: 10,
   });
 };
